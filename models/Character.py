@@ -7,6 +7,8 @@ class Character(ABC):
         self._end = self.calculate_stat()
         self._max_hp = self.calculate_base_hp()
         self.actual_hp = self.max_hp
+        self.bonus_str = 0
+        self.bonus_end = 0
 
     @property
     def str(self):
@@ -30,6 +32,26 @@ class Character(ABC):
             raise TypeError("New hp quantity must be of type integer !")
         self._actual_hp = nv_hp
 
+    @property
+    def bonus_str(self):
+        return self._bonus_str
+
+    @bonus_str.setter
+    def bonus_str(self,nv_str):
+        if type(nv_str) != int:
+            raise TypeError("The new bonus strength amount must be of type integer !")
+        self._bonus_str = nv_str
+
+    @property
+    def bonus_end(self):
+        return self._bonus_end
+
+    @bonus_end.setter
+    def bonus_end(self, nv_end):
+        if type(nv_end) != int :
+            raise TypeError('The new endurance amount must be of type integer !')
+        self._bonus_end = nv_end
+
     #FONCTION
     def calculate_stat(self):
         dice = Dice(1,6)
@@ -47,27 +69,29 @@ class Character(ABC):
 
     def calculate_base_hp(self):
         bonus = 0
-        if self.end < 5 :
+        total_end = self.end + self.bonus_end
+        if total_end < 5 :
             bonus = -1
-        elif self.end < 10 :
+        elif total_end < 10 :
             bonus = 0
-        elif self.end < 15 :
+        elif total_end < 15 :
             bonus = 1
         else :
             bonus = 2
 
-        return (self.end+bonus)
+        return (total_end+bonus)
 
     def strike(self, enemy : Character):
         dice = Dice(1,4)
         hit_power = dice.throw()
-        if self.str < 5 :
+        total_str = self.str + self.bonus_str
+        if total_str < 5 :
             hit_power -= 1
-        elif self.str < 10:
+        elif total_str < 10:
             pass
-        elif self.str < 15:
+        elif total_str < 15:
             hit_power += 1
         else :
             hit_power += 2
 
-        enemy.hp -= hit_power
+        enemy.actual_hp -= hit_power
