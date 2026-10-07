@@ -17,7 +17,7 @@ class Hero(Character, ABC) :
     def gold_stock(self, quantity):
         if type(quantity) != int :
             raise TypeError('Gold quantity must be of type integer !')
-        elif quantity >= 0:
+        elif quantity < 0:
             raise ValueError("Gold quantity can't be negative !")
         self._gold_stock = quantity
 
@@ -29,7 +29,7 @@ class Hero(Character, ABC) :
     def leather_stock(self, quantity):
         if type(quantity) != int :
             raise TypeError('Leather quantity must be of type integer !')
-        elif quantity >= 0:
+        elif quantity < 0:
             raise ValueError("Leather quantity can't be negative !")
         self._leather_stock = quantity
 

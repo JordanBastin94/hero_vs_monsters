@@ -3,12 +3,13 @@ from models.Dice import Dice
 
 class Character(ABC):
     def __init__(self):
+        self.bonus_str = 0
+        self.bonus_end = 0
         self._str = self.calculate_stat()
         self._end = self.calculate_stat()
         self._max_hp = self.calculate_base_hp()
         self.actual_hp = self.max_hp
-        self.bonus_str = 0
-        self.bonus_end = 0
+        
 
     @property
     def str(self):
