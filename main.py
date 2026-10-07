@@ -3,6 +3,8 @@ from models.Dwarf import Dwarf
 from models.LittleDragon import LittleDragon
 from models.Wolf import Wolf
 from models.Orc import Orc
+from models.Hero import Hero
+from models.Monster import Monster
 import random
 import time
 
@@ -27,28 +29,38 @@ def chooser_enemy():
     print(f"Enemy stats -> {enemy}")
     return enemy
 
-def start_battle(hero, enemy):
-    print("BATTLE BEGINS")
+def start_battle(hero:Hero, enemy:Monster):
+    print("----------BATTLE BEGINS----------")
     while(hero.actual_hp > 0 and enemy.actual_hp >0):
+        #Hero's turn
         print("Hero attacks the enemy !")
         hero.strike(enemy)
-        print(f"{enemy}")
+        print(f"Enemy's actual hp : {enemy.actual_hp}")
         if enemy.actual_hp <=0 :
             print("Enemy is dead. YOU WON !")
+            hero.loot_monster(enemy)
+            print(f"Gold : {hero.gold_stock}, Leather : {hero.leather_stock}")
             break
         time.sleep(2)
+
+        #Enemy's turn
         print("Enemy attacks the hero !")
         enemy.strike(hero)
-        print(f"{hero}")
+        print(f"Hero's actual hp : {hero.actual_hp}")
         if hero.actual_hp <=0 :
             print("Hero is dead. YOU LOST !")
             break
         time.sleep(2)
+        print("--------------------------------------")
     print("END OF BATTLE")
 
 hero = choose_hero()
-enemy = chooser_enemy()
-
-input("Press enter to start the battle !")
-
-start_battle(hero, enemy)
+while hero.is_alive :
+    enemy = chooser_enemy()
+    input("Press enter to start the battle !")
+    start_battle(hero, enemy)
+    if hero.is_alive :
+        print("Good job ! You won your battle !")
+        hero.regenerate_hp()
+    else :
+        print("Hero is dead ! Monster wins")
