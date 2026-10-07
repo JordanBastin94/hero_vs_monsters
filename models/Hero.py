@@ -1,4 +1,5 @@
 from models.Character import Character
+from models.Monster import Monster
 from abc import ABC
 
 class Hero(Character, ABC) :
@@ -36,3 +37,7 @@ class Hero(Character, ABC) :
     #Fonction
     def regenerate_hp(self):
         self.actual_hp = self.max_hp
+
+    def loot_monster(self, enemy:Monster):
+        self.gold_stock += enemy.gold_amount
+        self.leather_stock += enemy.leather_amount
