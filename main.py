@@ -8,10 +8,10 @@ from models.Monster import Monster
 import random
 import time
 
-def choose_hero():
-    choice = 0
+def choose_hero() -> Hero:
+    choice = ""
     while choice not in ("1","2"):
-        choice = input("Do you want to play as : 1.Human OR 2. Dwarf ? ")
+        choice = input("Do you want to play as :\n1. Human OR 2. Dwarf ? ")
         if choice == "1" :
             print("You have chosen the Human race !")
             hero = Human()
@@ -20,26 +20,27 @@ def choose_hero():
             hero = Dwarf()
         else :
             print("juste choose 1 OR 2 ! It's not that complicated ...")
-        print(f"Hero stats -> {hero}")
+    print(f"Hero stats -> {hero}")
     return hero
 
-def chooser_enemy():
-    enemies = (Wolf(), Orc(), LittleDragon())
+def chooser_enemy() -> Monster:
+    enemies = (Wolf, Orc, LittleDragon)
     enemy = random.choice(enemies)
+    enemy = enemy()
     print(f"Enemy stats -> {enemy}")
     return enemy
 
 def start_battle(hero:Hero, enemy:Monster):
     print("----------BATTLE BEGINS----------")
-    while(hero.actual_hp > 0 and enemy.actual_hp >0):
+    while(hero.is_alive and enemy.is_alive):
         #Hero's turn
         print("Hero attacks the enemy !")
         hero.strike(enemy)
         print(f"Enemy's actual hp : {enemy.actual_hp}")
-        if enemy.actual_hp <=0 :
+        if not enemy.is_alive :
             print("Enemy is dead. YOU WON !")
             hero.loot_monster(enemy)
-            print(f"Gold : {hero.gold_stock}, Leather : {hero.leather_stock}")
+            print(f"Hero's inventory - Gold : {hero.gold_stock}, Leather : {hero.leather_stock}")
             break
         time.sleep(2)
 
@@ -47,12 +48,13 @@ def start_battle(hero:Hero, enemy:Monster):
         print("Enemy attacks the hero !")
         enemy.strike(hero)
         print(f"Hero's actual hp : {hero.actual_hp}")
-        if hero.actual_hp <=0 :
+        if not hero.is_alive :
             print("Hero is dead. YOU LOST !")
             break
         time.sleep(2)
         print("--------------------------------------")
     print("END OF BATTLE")
+    print("--------------------------------------")
 
 hero = choose_hero()
 while hero.is_alive :
