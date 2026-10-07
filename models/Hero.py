@@ -41,3 +41,5 @@ class Hero(Character, ABC) :
     def loot_monster(self, enemy:Monster):
         self.gold_stock += enemy.gold_amount
         self.leather_stock += enemy.leather_amount
+
+    

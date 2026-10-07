@@ -100,3 +100,6 @@ class Character(ABC):
             hit_power += 2
 
         enemy.actual_hp -= hit_power
+
+    def __str__(self):
+        return f"{self.__class__.__name__} : STR = {self.str + self.bonus_str}, END = {self.end+self.bonus_end}, ACTUAL HP = {self.actual_hp}"
