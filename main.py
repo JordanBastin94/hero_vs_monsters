@@ -25,9 +25,9 @@ def choose_hero() -> Hero:
 
 def chooser_enemy() -> Monster:
     enemies = (Wolf, Orc, LittleDragon)
-    enemy = random.choice(enemies)
-    enemy = enemy()
-    print(f"Enemy stats -> {enemy}")
+    rand_enemy = random.choice(enemies)
+    enemy = rand_enemy()
+    print(f"Enemy's stats -> {enemy}")
     return enemy
 
 def start_battle(hero:Hero, enemy:Monster):
@@ -40,7 +40,8 @@ def start_battle(hero:Hero, enemy:Monster):
         if not enemy.is_alive :
             print("Enemy is dead. YOU WON !")
             hero.loot_monster(enemy)
-            print(f"Hero's inventory - Gold : {hero.gold_stock}, Leather : {hero.leather_stock}")
+            print("--------------------------------------")
+            print(f"\nLoots : \nHero's inventory - Gold : {hero.gold_stock}, Leather : {hero.leather_stock}")
             break
         time.sleep(2)
 
@@ -56,13 +57,16 @@ def start_battle(hero:Hero, enemy:Monster):
     print("END OF BATTLE")
     print("--------------------------------------")
 
-hero = choose_hero()
-while hero.is_alive :
-    enemy = chooser_enemy()
-    input("Press enter to start the battle !")
-    start_battle(hero, enemy)
-    if hero.is_alive :
-        print("Good job ! You won your battle !")
-        hero.regenerate_hp()
-    else :
-        print("Hero is dead ! Monster wins")
+def start_game():
+    hero = choose_hero()
+    while hero.is_alive :
+        enemy = chooser_enemy()
+        input("Press enter to start the battle !")
+        start_battle(hero, enemy)
+        if hero.is_alive :
+            print("Good job ! You won your battle !")
+            hero.regenerate_hp()
+        else :
+            print("Hero is dead ! Monster wins")
+
+start_game()
