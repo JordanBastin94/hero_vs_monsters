@@ -1,0 +1,2 @@
+class Wolf :
+    pass 
