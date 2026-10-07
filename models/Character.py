@@ -53,6 +53,10 @@ class Character(ABC):
             raise TypeError('The new endurance amount must be of type integer !')
         self._bonus_end = nv_end
 
+    @property
+    def is_alive(self):
+        return self.actual_hp > 0
+
     #FONCTION
     def calculate_stat(self):
         dice = Dice(1,6)
