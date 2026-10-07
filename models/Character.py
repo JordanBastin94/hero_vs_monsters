@@ -53,3 +53,17 @@ class Character(ABC):
             bonus = 2
 
         return (self.end+bonus)
+
+    def strike(self, enemy : Character):
+        dice = Dice(1,4)
+        hit_power = dice.throw()
+        if self.str < 5 :
+            hit_power -= 1
+        elif self.str < 10:
+            pass
+        elif self.str < 15:
+            hit_power += 1
+        else :
+            hit_power += 2
+
+        enemy.hp -= hit_power
