@@ -5,7 +5,8 @@ class Character(ABC):
     def __init__(self):
         self._str = self.calculate_stat()
         self._end = self.calculate_stat()
-        self.hp = self.calculate_base_hp()
+        self._max_hp = self.calculate_base_hp()
+        self.actual_hp = self.max_hp
 
     @property
     def str(self):
@@ -16,15 +17,18 @@ class Character(ABC):
         return self._end
 
     @property
-    def hp(self):
-        return self._hp
+    def max_hp(self):
+        return self._max_hp
 
-    @hp.setter
-    def hp(self,nv_hp):
+    @property
+    def actual_hp(self):
+        return self._actual_hp
+
+    @actual_hp.setter
+    def actual_hp(self, nv_hp):
         if type(nv_hp) != int :
-            raise TypeError('new hp must be of type integer !')
-        self._hp = nv_hp
-
+            raise TypeError("New hp quantity must be of type integer !")
+        self._actual_hp = nv_hp
 
     #FONCTION
     def calculate_stat(self):

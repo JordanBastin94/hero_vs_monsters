@@ -1,2 +1,2 @@
-class Human :
+class Human ():
     pass
